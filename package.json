@@ -1,0 +1,236 @@
+{
+  "name": "llm-context-builder",
+  "displayName": "LLM Context Builder",
+  "description": "Select files or folders in the explorer and export them as a single Markdown context (file tree + contents) for LLM prompts.",
+  "version": "0.1.0",
+  "publisher": "perroBlanco0",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/perroBlanco0/llm-context-exporter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/perroBlanco0/llm-context-exporter/issues"
+  },
+  "homepage": "https://github.com/perroBlanco0/llm-context-exporter#readme",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "llm",
+    "prompt",
+    "context",
+    "markdown",
+    "chatgpt"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "llmContextBuilder.copyForLLMPrompt",
+        "title": "Copy for LLM Prompt",
+        "category": "LLM Context Builder"
+      },
+      {
+        "command": "llmContextBuilder.exportForLLMPrompt",
+        "title": "Export for LLM Prompt (Markdown file)",
+        "category": "LLM Context Builder"
+      },
+      {
+        "command": "llmContextBuilder.copyWorkspaceForLLMPrompt",
+        "title": "Copy Workspace for LLM Prompt",
+        "category": "LLM Context Builder"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "llmContextBuilder.copyForLLMPrompt",
+          "group": "6_copypath@100"
+        },
+        {
+          "command": "llmContextBuilder.exportForLLMPrompt",
+          "group": "6_copypath@101"
+        }
+      ],
+      "editor/title/context": [
+        {
+          "command": "llmContextBuilder.copyForLLMPrompt",
+          "group": "1_copy"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "llmContextBuilder.copyForLLMPrompt",
+          "when": "false"
+        },
+        {
+          "command": "llmContextBuilder.exportForLLMPrompt",
+          "when": "false"
+        },
+        {
+          "command": "llmContextBuilder.copyWorkspaceForLLMPrompt",
+          "when": "workspaceFolderCount != 0"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "LLM Context Builder",
+      "properties": {
+        "llmContextBuilder.respectGitignore": {
+          "type": "boolean",
+          "default": true,
+          "description": "Skip files ignored by the .gitignore files found between the workspace root and each file."
+        },
+        "llmContextBuilder.ignoreGlobs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            "**/.git/**",
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/out/**",
+            "**/build/**",
+            "**/.venv/**",
+            "**/__pycache__/**",
+            "**/*.lock",
+            "**/package-lock.json"
+          ],
+          "description": "Additional .gitignore-style patterns that are always ignored."
+        },
+        "llmContextBuilder.binaryExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [
+            ".png",
+            ".jpg",
+            ".jpeg",
+            ".gif",
+            ".bmp",
+            ".ico",
+            ".webp",
+            ".tiff",
+            ".psd",
+            ".pdf",
+            ".zip",
+            ".tar",
+            ".gz",
+            ".bz2",
+            ".xz",
+            ".7z",
+            ".rar",
+            ".jar",
+            ".war",
+            ".class",
+            ".exe",
+            ".dll",
+            ".so",
+            ".dylib",
+            ".bin",
+            ".o",
+            ".a",
+            ".obj",
+            ".pyc",
+            ".pyo",
+            ".wasm",
+            ".mp3",
+            ".wav",
+            ".flac",
+            ".ogg",
+            ".mp4",
+            ".mkv",
+            ".mov",
+            ".avi",
+            ".webm",
+            ".ttf",
+            ".otf",
+            ".woff",
+            ".woff2",
+            ".eot",
+            ".sqlite",
+            ".db"
+          ],
+          "description": "File extensions treated as binary. Binary files are listed in the tree but their contents are never inlined."
+        },
+        "llmContextBuilder.detectBinaryContent": {
+          "type": "boolean",
+          "default": true,
+          "description": "Also detect binary files by content (NUL bytes / invalid UTF-8) in addition to the extension list."
+        },
+        "llmContextBuilder.maxFileSizeKb": {
+          "type": "number",
+          "default": 256,
+          "description": "Files larger than this size (in KB) are skipped. Use 0 to disable the limit."
+        },
+        "llmContextBuilder.maxTotalSizeMb": {
+          "type": "number",
+          "default": 5,
+          "description": "Stop collecting content once the generated Markdown exceeds this size (in MB). Use 0 to disable the limit."
+        },
+        "llmContextBuilder.maxFiles": {
+          "type": "number",
+          "default": 500,
+          "description": "Maximum number of files to include. Use 0 to disable the limit."
+        },
+        "llmContextBuilder.includeTree": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include an ASCII file tree of the selection at the top of the output."
+        },
+        "llmContextBuilder.includeFileContents": {
+          "type": "boolean",
+          "default": true,
+          "description": "Include the contents of the selected files."
+        },
+        "llmContextBuilder.includeLineNumbers": {
+          "type": "boolean",
+          "default": false,
+          "description": "Prefix every source line with its line number."
+        },
+        "llmContextBuilder.header": {
+          "type": "string",
+          "default": "",
+          "description": "Optional text prepended to the generated Markdown (for example your prompt instructions)."
+        },
+        "llmContextBuilder.showSummary": {
+          "type": "boolean",
+          "default": true,
+          "description": "Append a summary with file count, total size and skipped files."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run check-types && npm run lint && npm run bundle -- --minify",
+    "bundle": "esbuild src/extension.ts --bundle --outfile=dist/extension.js --external:vscode --format=cjs --platform=node --target=node20",
+    "compile": "tsc -p tsconfig.json",
+    "watch": "npm run bundle -- --sourcemap --watch",
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "tsc -p tsconfig.test.json && node --test out/test",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "dependencies": {
+    "ignore": "^7.0.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.20.1",
+    "@types/vscode": "^1.96.0",
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.28.1",
+    "eslint": "^9.39.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.63.0"
+  }
+}
