@@ -9,6 +9,7 @@ const BY_EXTENSION: Record<string, string> = {
   '.cpp': 'cpp',
   '.cs': 'csharp',
   '.css': 'css',
+  '.csv': 'csv',
   '.dart': 'dart',
   '.env': 'dotenv',
   '.go': 'go',
@@ -24,6 +25,7 @@ const BY_EXTENSION: Record<string, string> = {
   '.jsx': 'jsx',
   '.kt': 'kotlin',
   '.less': 'less',
+  '.log': 'text',
   '.lua': 'lua',
   '.md': 'markdown',
   '.mjs': 'javascript',
@@ -43,7 +45,9 @@ const BY_EXTENSION: Record<string, string> = {
   '.tf': 'hcl',
   '.toml': 'toml',
   '.ts': 'typescript',
+  '.tsv': 'text',
   '.tsx': 'tsx',
+  '.txt': 'text',
   '.vue': 'vue',
   '.xml': 'xml',
   '.yaml': 'yaml',
@@ -52,6 +56,8 @@ const BY_EXTENSION: Record<string, string> = {
 };
 
 const BY_FILENAME: Record<string, string> = {
+  '.editorconfig': 'ini',
+  '.gitattributes': 'gitattributes',
   '.gitignore': 'gitignore',
   dockerfile: 'dockerfile',
   makefile: 'makefile',
