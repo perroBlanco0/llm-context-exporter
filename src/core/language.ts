@@ -1,0 +1,63 @@
+import { basename, extname } from './paths';
+
+const BY_EXTENSION: Record<string, string> = {
+  '.bash': 'bash',
+  '.c': 'c',
+  '.cc': 'cpp',
+  '.cfg': 'ini',
+  '.cjs': 'javascript',
+  '.cpp': 'cpp',
+  '.cs': 'csharp',
+  '.css': 'css',
+  '.dart': 'dart',
+  '.env': 'dotenv',
+  '.go': 'go',
+  '.graphql': 'graphql',
+  '.h': 'c',
+  '.hpp': 'cpp',
+  '.html': 'html',
+  '.ini': 'ini',
+  '.java': 'java',
+  '.js': 'javascript',
+  '.json': 'json',
+  '.jsonc': 'jsonc',
+  '.jsx': 'jsx',
+  '.kt': 'kotlin',
+  '.less': 'less',
+  '.lua': 'lua',
+  '.md': 'markdown',
+  '.mjs': 'javascript',
+  '.php': 'php',
+  '.pl': 'perl',
+  '.ps1': 'powershell',
+  '.py': 'python',
+  '.r': 'r',
+  '.rb': 'ruby',
+  '.rs': 'rust',
+  '.scala': 'scala',
+  '.scss': 'scss',
+  '.sh': 'bash',
+  '.sql': 'sql',
+  '.svelte': 'svelte',
+  '.swift': 'swift',
+  '.tf': 'hcl',
+  '.toml': 'toml',
+  '.ts': 'typescript',
+  '.tsx': 'tsx',
+  '.vue': 'vue',
+  '.xml': 'xml',
+  '.yaml': 'yaml',
+  '.yml': 'yaml',
+  '.zsh': 'bash',
+};
+
+const BY_FILENAME: Record<string, string> = {
+  '.gitignore': 'gitignore',
+  dockerfile: 'dockerfile',
+  makefile: 'makefile',
+};
+
+export function languageFor(path: string): string {
+  const name = basename(path).toLowerCase();
+  return BY_FILENAME[name] ?? BY_EXTENSION[extname(path)] ?? '';
+}
